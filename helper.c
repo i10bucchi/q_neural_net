@@ -285,9 +285,21 @@ void append_batch(int s[], int a, double r, int s_next[], int batch_s[BATCH_SIZE
     batch_r[batch_count] = r;
 }
 
+int is_equal_s(int s1[], int s2[]) {
+    int i;
+
+    for (i = 0; i < STEP_NO; i++) {
+        if (s1[i] != s2[i]) {
+            return (0);
+        }
+    }
+    return (1);
+}
+
 void append_exp_memory(int s[], int a, double r, int s_next[], int exp_memory_s[BATCH_SIZE][STATE_NO], int exp_memory_a[BATCH_SIZE], double exp_memory_r[BATCH_SIZE], int exp_memory_s_next[BATCH_SIZE][STATE_NO],  int step) {
     int i;
     int min_r_index;
+    int flag;
 
     // メモリがいっぱいになるまでは順次追加
     if (step < EXP_SIZE) {
@@ -296,19 +308,31 @@ void append_exp_memory(int s[], int a, double r, int s_next[], int exp_memory_s[
     // いっぱいになったら, その中で最も悪い経験と今回得た経験を比べてよければ交換する
     else {
         min_r_index = 0;
-        for (i = 0; i < BATCH_SIZE; i++) {
+        flag = 1;
+        for (i = 0; i < EXP_SIZE; i++) {
+            // すでにその経験がメモリー内にあるなら追加は行わない
+            if ( is_equal_s(s, exp_memory_s[i]) ) {
+                return;
+            }
+            // exp_memory_rが全て同じ報酬の大きさになっていないかの確認
+            if (i > 0) {
+                if (exp_memory_r[i] != exp_memory_r[i-1]) {
+                    flag = 0;
+                }
+            }
             if (exp_memory_r[i] < exp_memory_r[min_r_index]) {
                 min_r_index = i;
             }
         }
-        if (exp_memory_r[min_r_index] > 0) {
-            if (r > 0) {
+        if (r >= exp_memory_r[min_r_index]) {
+            // exp_memory_rが全て同じ報酬の大きさになっている場合はランダムに入れ替える
+            if (flag == 1) {
                 min_r_index = genrand_int32() % EXP_SIZE;
                 append_batch(s, a, r, s_next, exp_memory_s, exp_memory_a, exp_memory_r, exp_memory_s_next, min_r_index);
             }
-        }
-        else {
-            append_batch(s, a, r, s_next, exp_memory_s, exp_memory_a, exp_memory_r, exp_memory_s_next, min_r_index);
+            else {
+                append_batch(s, a, r, s_next, exp_memory_s, exp_memory_a, exp_memory_r, exp_memory_s_next, min_r_index);
+            }
         }
     }
 }
