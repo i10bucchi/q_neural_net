@@ -266,7 +266,8 @@ double reword(int s_next[], int hit) {
         r = 0.0;
     }
 
-    if ( (s_next[BAR_X] > YOKO/10) && (s_next[BAR_X] < YOKO - YOKO/10) ) {
+    // バーが端によっていなければ加点
+    if ( (s_next[BAR_X] > YOKO/10) && (s_next[BAR_X] + BAR_LENGTH < YOKO - YOKO/10) ) {
         r += 0.01;
     }
 
