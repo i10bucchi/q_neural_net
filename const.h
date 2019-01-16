@@ -21,24 +21,24 @@
 #define BALL_VEC_Y 3
 #define BAR_X 4
 
-#define SEED 2
+#define SEED 3
 
 #define LINE_NUM 256
 
 /*強化学習*/
-#define ALPHA 0.1
+#define ALPHA 0.08
 #define EPSILON 0.3
 #define GAMMA 0.9
-#define EPISODE_NO 100000
-#define STEP_NO 20000
+#define EPISODE_NO 200000
+#define STEP_NO 10000
 
 /*ニューラルネット*/
-#define NNLIMIT 0.00005
+#define NNLIMIT 0.00006
 #define NNALPHA 0.01
 // #define INPUT_UNIT_NO (YOKO + TATE + SPEED_LIMIT*2 + 2 + YOKO - BAR_LENGTH)
 #define INPUT_UNIT_NO STATE_NO
 #define MID_UNIT_NO 96
 #define OUTPUT_UNIT_NO ACTION_NO
-#define BATCH_SIZE 1000
-#define EXP_SIZE 1000
+#define BATCH_SIZE 100
+#define EXP_SIZE BATCH_SIZE
 #define LOOP_LIMIT 500
