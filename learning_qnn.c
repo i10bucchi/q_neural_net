@@ -33,8 +33,6 @@ int main(void) {
 
     // ニューラルネットの重み初期化
     initW(w_mid, w_out);
-    // ニューラルネットの重みをロード
-    // load_model(w_mid, w_out);
 
     // 収益の初期化
     rewardsum = 0.0;
@@ -62,10 +60,11 @@ int main(void) {
             // 良い経験を保存
             append_exp_memory(s, a, r, s_next, exp_memory_s, exp_memory_a, exp_memory_r, exp_memory_s_next, step);
             step++;
-
             // バッチとして保存
             append_batch(s, a, r, s_next, batch_s, batch_a, batch_r, batch_s_next, batch_count);
             batch_count++;
+
+            // バッチが貯まったら学習
             if (batch_count == BATCH_SIZE) {
                 // Q値の更新
                 learning_units(batch_s, batch_a, batch_r, batch_s_next, w_mid, w_out, result_mid, BATCH_SIZE);
@@ -104,7 +103,6 @@ int main(void) {
     }
 
     HgClose();
-    printf("episode = %d\n", j);
 
     return 0;
 }
