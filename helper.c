@@ -9,19 +9,28 @@ int episode;
 
 void print_setting(void) {
     printf("----------------- setting -----------------\n");
+    printf("- game\n");
+    printf("    window_width:       %d\n", TATE);
+    printf("    window_height:      %d\n", YOKO);
+    printf("    bar_length:         %d\n", BAR_LENGTH);
+    printf("\n");
     printf("- reinforcement learning\n");
-    printf("    alpha:          %f\n", ALPHA);
-    printf("    epsilon:        %f\n", EPSILON);
-    printf("    gamma:          %f\n", GAMMA);
-    printf("    episode_no:     %d\n", EPISODE_NO);
-    printf("    step_no:        %d\n", STEP_NO);
+    printf("    alpha:              %f\n", ALPHA);
+    printf("    epsilon:            %f\n", EPSILON);
+    printf("    gamma:              %f\n", GAMMA);
+    printf("    episode_no:         %d\n", EPISODE_NO);
+    printf("    step_no:            %d\n", STEP_NO);
+    printf("\n");
     printf("- neural network\n");
-    printf("    nnlimit:        %f\n", NNLIMIT);
-    printf("    nnalpha:        %f\n", NNALPHA);
-    printf("    hidden_unit_no: %d\n", MID_UNIT_NO);
-    printf("    batch_size:     %d\n", BATCH_SIZE);
-    printf("    exp_size: :     %d\n", EXP_SIZE);
-    printf("    loop_limit:     %d\n", LOOP_LIMIT);
+    printf("    nnlimit:            %f\n", NNLIMIT);
+    printf("    nnalpha:            %f\n", NNALPHA);
+    printf("    hidden_unit_no:     %d\n", MID_UNIT_NO);
+    printf("    batch_size:         %d\n", BATCH_SIZE);
+    printf("    exp_memory_size:    %d\n", EXP_SIZE);
+    printf("    loop_limit:         %d\n", LOOP_LIMIT);
+    printf("\n");
+    printf("- util\n");
+    printf("    seed:               %d\n", SEED);
     printf("-------------------------------------------\n\n");
 }
 
